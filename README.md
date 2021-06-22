@@ -46,15 +46,30 @@ pd.options.display.max_columns = None
 date.split("년")[1].replace("월","") 파이썬의 문자열파일이므로 일부만으로도 제거가능
 
 
-# parse_month 라는 함수를 만듭니다.
+# parse_year 라는 함수를 만듭니다.
+연도만 반환하도록 하며, 반환하는 데이터는 int 타입이 되도록 합니다.
+def parse_year(date) :
+        year = date.split('년')[0]
+        year = int(year)
+        return year
+
+
+
 # 월만 반환하도록 하며, 반환하는 데이터는 int 타입이 되도록 합니다.
 def parse_month(date):
         month = date.split("년")[1].replace("월","")
         month = int(month)
         return month
+
+# 최근 데이터가 담긴 df_last 에는 전용면적이 있습니다. 
+# 이전 데이터에는 전용면적이 없기 때문에 "전체"만 사용하도록 합니다.
+# loc를 사용해서 전체에 해당하는 면적만 copy로 복사해서 df_last_prepare 변수에 담습니다.
+
+df_last_prepare = df_last.loc[df_last["전용면적"]== "전체", cols]
+df_last_prepare.head(1)
         
 
-# 위에서 그린 피봇테이블을 히트맵으로 표현해 봅니다.
+# 그린 피봇테이블을 히트맵으로 표현해 봅니다.
 pv=pd.pivot_table(data=df, index='연도', columns= '지역명', values= '평당분양가격').astype(int)
 pv.astype(int).style.background_gradient()
 ==(동일값) pv= df.pivot_table(index= "연도", columns="지역명", values= "평당분양가격")
